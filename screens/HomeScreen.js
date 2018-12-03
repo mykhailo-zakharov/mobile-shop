@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
+import { nls } from "../i18n";
+
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -17,6 +19,7 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    console.log("render HomePage");
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -34,9 +37,8 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {this._maybeRenderDevelopmentModeWarning()}
 
-            <Text style={styles.getStartedText}>
-                The most straightforward way to provide an icon for your app is to provide the icon key in app.json. If you want to do the minimum possible, this key alone is sufficient. However, Expo also accepts platform-specific keys under ios.icon and android.icon. If either of these exist, they will take priority over the base icon key on their respective platform. Further customization of the Android icon is possible using the android.adaptiveIcon key, which will override both of the previously mentioned settings. Most production-quality apps will probably want to provide something slightly different between iOS and Android.
-            </Text>
+            <Text style={styles.getStartedText}>{nls("home_title")}</Text>
+            <Text style={styles.getStartedText}>{nls("home_describe")}</Text>
           </View>
 
           {/*<View style={styles.helpContainer}>*/}

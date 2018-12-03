@@ -8,69 +8,75 @@ import HistoryScreen from '../screens/HistoryScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import BasketScreen from '../screens/Basket/BasketScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-});
+import { nls } from "../i18n";
 
-HomeStack.navigationOptions = {
-    tabBarLabel: 'About',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={
-                Platform.OS === 'ios'
-                    ? `ios-information-circle${focused ? '' : '-outline'}`
-                    : 'md-information-circle'
-            }
-        />
-    ),
-};
 
-const HistoryStack = createStackNavigator({
-    Links: HistoryScreen,
-});
 
-HistoryStack.navigationOptions = {
-    tabBarLabel: 'History',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-        />
-    ),
-};
+export default function () {
+    const HomeStack = createStackNavigator({
+        Home: HomeScreen,
+    });
 
-const SettingsStack = createStackNavigator({
-    Settings: SettingsScreen,
-});
+    HomeStack.navigationOptions = {
+        tabBarLabel: nls("link_home"),
+        tabBarIcon: ({focused}) => (
+            <TabBarIcon
+                focused={focused}
+                name={
+                    Platform.OS === 'ios'
+                        ? `ios-information-circle${focused ? '' : '-outline'}`
+                        : 'md-information-circle'
+                }
+            />
+        ),
+    };
 
-SettingsStack.navigationOptions = {
-    tabBarLabel: 'Settings',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
-        />
-    ),
-};
+    const HistoryStack = createStackNavigator({
+        Links: HistoryScreen,
+    });
 
-const BasketStack = createStackNavigator({
-    Settings: BasketScreen,
-});
+    HistoryStack.navigationOptions = {
+        tabBarLabel: 'History',
+        tabBarIcon: ({focused}) => (
+            <TabBarIcon
+                focused={focused}
+                name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+            />
+        ),
+    };
 
-BasketStack.navigationOptions = {
-    tabBarLabel: 'Basket',
-    tabBarIcon: ({focused}) => (
-        <TabBarIcon
-            focused={focused}
-            name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
-        />
-    ),
-};
+    const SettingsStack = createStackNavigator({
+        Settings: SettingsScreen,
+    });
 
-export default createBottomTabNavigator({
-    HomeStack,
-    BasketStack,
-    HistoryStack,
-    SettingsStack
-});
+    SettingsStack.navigationOptions = {
+        tabBarLabel: nls("link_settings"),
+        tabBarIcon: ({focused}) => (
+            <TabBarIcon
+                focused={focused}
+                name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+            />
+        ),
+    };
+
+    const BasketStack = createStackNavigator({
+        Settings: BasketScreen,
+    });
+
+    BasketStack.navigationOptions = {
+        tabBarLabel: nls("link_basket"),
+        tabBarIcon: ({focused}) => (
+            <TabBarIcon
+                focused={focused}
+                name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+            />
+        ),
+    };
+
+    return createBottomTabNavigator({
+        HomeStack,
+        BasketStack,
+        HistoryStack,
+        SettingsStack
+    });
+}

@@ -31,6 +31,7 @@ export default BuyView = props => {
             <Text style={styles.sum}>Sum: {props.sum} grn</Text>
         </View>
         <Button title={"Clear basket"} onPress={props.clearBasket}/>
+        <Button title={"Checkout"} onPress={props.checkout} disabled={true}/>
     </ScrollView>)
 }
 
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         borderBottomWidth: 1,
-        borderBottomColor: "#d1d11d1",
+        borderBottomColor: "#d1d1d1",
         marginBottom: 10
     },
     header: {
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     },
     sumContainer: {
         borderTopWidth: 1,
-        borderTopColor: "#d1d11d1",
+        borderTopColor: "#d1d1d1",
         marginTop: 10
     },
     sum: {

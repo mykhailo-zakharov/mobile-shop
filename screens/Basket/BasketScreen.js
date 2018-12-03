@@ -100,7 +100,7 @@ export default class SettingsScreen extends React.Component {
     addToBasket = ({itemId, count}) => {
         this.setState(prevState => {
             let item = this.state.basket[itemId];
-            if(item && item.id){
+            if(item && item.link){
                 item = {...item, count: item.count += count};
             } else {
                 item = {
@@ -184,6 +184,10 @@ export default class SettingsScreen extends React.Component {
         });
     };
 
+    checkout = () => {
+
+    };
+
 
     render() {
         let {basket, sum, isBasketView} = this.state;
@@ -196,7 +200,11 @@ export default class SettingsScreen extends React.Component {
                 </View>
 
                 {/*basket body*/}
-                {isBasketView ? <BuyView {...this.state} removeItem={this.removeItem} clearBasket={this.clearBasket}/> :
+                {isBasketView ? <BuyView {...this.state}
+                                         removeItem={this.removeItem}
+                                         clearBasket={this.clearBasket}
+                                         checkout={this.checkout}
+                    /> :
                 // list of items
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     {!isBasketView && list && list.length && list.map(item => (

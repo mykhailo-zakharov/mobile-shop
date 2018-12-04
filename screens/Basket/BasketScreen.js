@@ -1,84 +1,13 @@
 import React from 'react';
 import {View, ScrollView, Text, StyleSheet, Button} from "react-native";
+import { connect } from 'react-redux';
 
 import ItemBasket from "./Item";
 import BuyView from "./BuyView"
+import { listRepos } from '../../redux/reducer';
 
-const list = [
-    {
-        id: 0,
-        name: "item 1",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        optCounting: 10,
-        exist: true
-    },
-    {
-        id: 1,
-        name: "item 2",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        priceOpt: 50,
-        optCounting: 10,
-        exist: true
-    },
-    {
-        id: 2,
-        name: "item 3",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        priceOpt: 50,
-        optCounting: 10,
-        exist: true
-    },
-    {
-        id: 3,
-        name: "item 4",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        priceOpt: 50,
-        optCounting: 10,
-        exist: true
-    },
-    {
-        id: 4,
-        name: "item 5",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        priceOpt: 50,
-        optCounting: 10,
-        exist: false
-    },
-    {
-        id: 5,
-        name: "item 6",
-        prices: {
-            "1" : 50,
-            "10" : 45,
-            "50" : 40
-        },
-        priceOpt: 50,
-        optCounting: 10,
-        exist: true
-    },
-];
 
-export default class SettingsScreen extends React.Component {
+class BasketScreen extends React.Component {
 
     state = {
         basket: {
@@ -93,11 +22,17 @@ export default class SettingsScreen extends React.Component {
         isBasketView: false
     };
 
+    componentDidMount() {
+        console.log("componentDidMount");
+        this.props.listRepos();
+    }
+
     static navigationOptions = {
         header: null,
     };
 
     addToBasket = ({itemId, count}) => {
+        const prices = this.props.prices;
         this.setState(prevState => {
             let item = this.state.basket[itemId];
             if(item && item.link){
@@ -106,7 +41,7 @@ export default class SettingsScreen extends React.Component {
                 item = {
                     id: itemId,
                     count,
-                    link: list.filter(i => i.id == itemId)[0]
+                    link: prices.filter(i => i.id == itemId)[0]
                 }
             }
 
@@ -191,6 +126,7 @@ export default class SettingsScreen extends React.Component {
 
     render() {
         let {basket, sum, isBasketView} = this.state;
+        let prices = this.props.prices;
 
         return (
             <View style={styles.container}>
@@ -205,14 +141,14 @@ export default class SettingsScreen extends React.Component {
                                          clearBasket={this.clearBasket}
                                          checkout={this.checkout}
                     /> :
-                // list of items
+                // prices of items
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    {!isBasketView && list && list.length && list.map(item => (
+                    {!isBasketView && prices && prices.length && prices.map(item => (
                         <ItemBasket key={item.id} {...item}
                                     addToBasket={this.addToBasket}
                                     countPrice={this.countPrice}
                         />
-                    ))}
+                    )) || null}
 
                 </ScrollView>}
 
@@ -257,4 +193,16 @@ const styles = StyleSheet.create({
     }
 
 });
+
+const mapStateToProps = state => {
+    return {
+        prices: state.prices
+    };
+};
+
+const mapDispatchToProps = {
+    listRepos
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BasketScreen);
 

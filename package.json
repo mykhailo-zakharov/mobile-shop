@@ -18,7 +18,10 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-i18n": "^2.0.15",
     "react-native-picker-select": "^5.1.0",
-    "react-navigation": "^2.18.2"
+    "react-navigation": "^2.18.2",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-axios-middleware": "^4.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",

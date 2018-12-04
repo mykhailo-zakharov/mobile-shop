@@ -1,20 +1,16 @@
 import React from 'react';
 import {View, ScrollView, TextInput, Text, StyleSheet, Button, Platform} from "react-native";
+import {connect} from "react-redux";
 
 import RNPickerSelect from 'react-native-picker-select';
-import { nls, setLanguage, getLanguage } from "../i18n";
+import {nls, setLanguage, getLanguage} from "../i18n";
+import {changeLanguage, changeUserName} from "../redux/reducer";
 
-export default class SettingsScreen extends React.Component {
+
+class SettingsScreen extends React.Component {
     static navigationOptions = {
         title: 'Settings',
     };
-
-    state = {
-        name: "",
-        lang: getLanguage()
-    };
-
-    inputRefs = {};
 
     langItems = [
         {
@@ -31,18 +27,15 @@ export default class SettingsScreen extends React.Component {
         },
     ];
 
-    changeName = () => {
-
-    };
-
     changeLang = value => {
         setLanguage(value);
-        this.setState({
-            lang: value
-        });
+        this.props.changeLanguage(value)
     };
 
     render() {
+        const {language, userName, userAddress, userPhones} = this.props;
+        console.log("setting language", language);
+
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container}>
@@ -50,17 +43,15 @@ export default class SettingsScreen extends React.Component {
                     <RNPickerSelect
                         items={this.langItems}
                         onValueChange={this.changeLang}
-                        style={{ ...pickerSelectStyles }}
-                        value={this.state.lang}
+                        style={{...pickerSelectStyles}}
+                        value={language}
                         placeholder={{}}
-                        ref={(el) => {
-                            this.inputRefs.lang = el;
-                        }}
                     />
 
                     <Text style={styles.title}>{nls("name")}</Text>
                     <TextInput style={pickerSelectStyles.inputIOS}
-                               onChangeText={this.changeName}
+                               onChangeText={this.props.changeUserName}
+                               value={userName}
                     />
                 </ScrollView>
             </View>
@@ -99,3 +90,20 @@ const pickerSelectStyles = StyleSheet.create({
         color: 'black',
     },
 });
+
+const mapStateToProps = state => {
+    console.log("settings mapStateProps", state);
+    return {
+        language: state.language,
+        userName: state.userName,
+        userAddress: state.userAddress,
+        userPhones: state.userPhones,
+    }
+};
+
+const mapDispatchToProps = {
+    changeLanguage,
+    changeUserName
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

@@ -3,6 +3,9 @@ export default {
     "link_basket": "Корзина",
     "link_settings": "Настройки",
 
+    "alert_error_fetch_price_title": 'Ошибка!',
+    "alert_error_fetch_price_body": 'Проблема обновления цен!',
+
     "name": "Имя",
     "language": "Язык",
 

@@ -1,7 +1,12 @@
+import {nls} from "./index";
+
 export default {
     "link_home": "Home",
     "link_basket": "Basket",
     "link_settings": "Settings",
+
+    "alert_error_fetch_price_title": 'Error!',
+    "alert_error_fetch_price_body": 'The problem is with updating  prices!',
 
     "name": "Name",
     "language": "Language",

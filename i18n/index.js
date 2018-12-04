@@ -1,5 +1,4 @@
 import { AsyncStorage } from "react-native"
-
 import I18n from 'react-native-i18n';
 
 import ua from "./ua";
@@ -25,24 +24,15 @@ const getLanguage = () => {
 
 const setLanguage = async lang => {
     I18n.locale = lang;
-    await saveLangToStorage(lang);
     I18n.forceUpdateApp();
     console.log("should", lang, " / is ", I18n.locale);
-};
-
-const saveLangToStorage = async lang => {
-    try {
-        await AsyncStorage.setItem("lang", lang);
-    } catch (error) {
-        // Error saving data
-    }
 };
 
 const initLanguage = component => {
     return new Promise(resolve => {
         try {
             console.log("init language", I18n.locale);
-            AsyncStorage.getItem("lang", (err, lang) => {
+            AsyncStorage.getItem("language", (err, lang) => {
                 console.log("init language", lang);
                 if (lang !== null) {
                     I18n.locale = lang;

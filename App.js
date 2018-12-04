@@ -3,6 +3,23 @@ import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {AppLoading, Asset, Font, Icon} from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import {initLanguage} from "./i18n";
+import { createStore, applyMiddleware } from 'redux';
+import { Provider, connect } from 'react-redux';
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
+import reducer, {initState} from './redux/reducer';
+initState();
+
+
+const client = axios.create({
+    baseURL: 'https://api.github.com',
+    responseType: 'json'
+});
+
+const store = () => {
+    return createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+};
+
 
 export default class App extends React.Component {
 
@@ -23,11 +40,14 @@ export default class App extends React.Component {
         } else {
             console.log("render: app");
             const Nav = AppNavigator();
+
             return (
-                <View style={styles.container}>
-                    {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                    <Nav />
-                </View>
+                <Provider store={store()}>
+                    <View style={styles.container}>
+                        {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
+                        <Nav/>
+                    </View>
+                </Provider>
             );
         }
     }
